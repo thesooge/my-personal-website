@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}{{ site_settings.owner_name }} - {{ site_settings.tagline }}{% endblock %}</title>
+    {% load static %}
+    
+    <!-- SEO Meta Tags -->
+    <meta name="description" content="{% block meta_description %}{{ site_settings.default_meta_description }}{% endblock %}">
+    <meta name="keywords" content="{% block meta_keywords %}software engineer, developer, portfolio, blog{% endblock %}">
+    <meta name="author" content="{{ site_settings.owner_name }}">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="{% block og_title %}{{ site_settings.owner_name }} - {{ site_settings.tagline }}{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}{{ site_settings.default_meta_description }}{% endblock %}">
+    <meta property="og:type" content="{% block og_type %}website{% endblock %}">
+    <meta property="og:url" content="{{ request.build_absolute_uri }}">
+    <meta property="og:image" content="{% block og_image %}{% if site_settings.avatar %}{{ site_settings.avatar.url }}{% endif %}{% endblock %}">
+    <meta property="og:site_name" content="{{ site_settings.owner_name }}">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{% block twitter_title %}{{ site_settings.owner_name }} - {{ site_settings.tagline }}{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}{{ site_settings.default_meta_description }}{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}{% if site_settings.avatar %}{{ site_settings.avatar.url }}{% endif %}{% endblock %}">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ request.build_absolute_uri }}">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{% static 'favicon.ico' %}">
+    
+    <!-- Google Fonts - Modern Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS via CDN (includes typography plugin classes) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            fontFamily: {
+              'modern': ['Inter', 'system-ui', 'sans-serif'],
+              'display': ['Poppins', 'system-ui', 'sans-serif'],
+              'tech': ['Space Grotesk', 'monospace'],
+            }
+          }
+        },
+        plugins: [
+          function({ addBase }) {
+            addBase({
+              'body': { color: '#111827' },
+            });
+          }
+        ]
+      }
+    </script>
+    
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'css/site.css' %}">
+    {% block extra_css %}{% endblock %}
+    
+    <!-- Analytics -->
+    {% if site_settings.analytics_snippet %}
+        {{ site_settings.analytics_snippet|safe }}
+    {% endif %}
+</head>
+<body class="min-h-screen bg-white dark:bg-gray-900 text-gray-900 dark:text-gray-100 transition-colors duration-200">
+    <!-- Navigation -->
+    <nav class="bg-white dark:bg-gray-800 shadow-lg sticky top-0 z-50 transition-colors duration-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo/Brand -->
+                <div class="flex-shrink-0">
+                    <a href="{% url 'content:home' %}" class="text-xl font-display font-bold text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200 transition-colors duration-200 logo-text">
+                        {{ site_settings.owner_name }}
+                    </a>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:block">
+                    <div class="ml-10 flex items-baseline space-x-4">
+                        <a href="{% url 'content:home' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                            Home
+                        </a>
+                        <a href="{% url 'content:about' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                            About
+                        </a>
+                        <a href="{% url 'content:post_list' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                            Blog
+                        </a>
+                        <a href="{% url 'content:project_list' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                            Projects
+                        </a>
+                        <a href="{% url 'content:contact' %}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                            Contact
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Right side -->
+                <div class="flex items-center space-x-4">
+                    <!-- Search -->
+                    <form action="{% url 'content:search' %}" method="GET" class="hidden md:block">
+                        <input type="text" name="q" placeholder="Search..." class="search-bar">
+                    </form>
+                    
+                    <!-- Dark mode toggle -->
+                    <button id="dark-mode-toggle" class="p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                        <svg id="sun-icon" class="w-5 h-5 hidden dark:block" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                        <svg id="moon-icon" class="w-5 h-5 block dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9 9 0 1012.354 20.354a9 9 0 001.414-1.414z"></path>
+                        </svg>
+                    </button>
+                    
+                    <!-- Mobile menu button -->
+                    <button id="mobile-menu-button" class="md:hidden p-2 rounded-md text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="hidden md:hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+                <a href="{% url 'content:home' %}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                    Home
+                </a>
+                <a href="{% url 'content:about' %}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                    About
+                </a>
+                <a href="{% url 'content:post_list' %}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                    Blog
+                </a>
+                <a href="{% url 'content:project_list' %}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                    Projects
+                </a>
+                <a href="{% url 'content:contact' %}" class="block px-3 py-2 rounded-md text-base font-medium text-gray-700 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors duration-200">
+                    Contact
+                </a>
+                
+                <!-- Mobile Search -->
+                <form action="{% url 'content:search' %}" method="GET" class="px-3 py-2">
+                    <input type="text" name="q" placeholder="Search..." class="search-bar">
+                </form>
+            </div>
+        </div>
+    </nav>
+    
+    <!-- Main Content -->
+    <main class="flex-grow">
+        {% block content %}{% endblock %}
+    </main>
+    
+    <!-- Footer -->
+    <footer class="bg-gray-800 dark:bg-gray-900 text-white py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- About -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">{{ site_settings.owner_name }}</h3>
+                    <p class="text-gray-300 mb-4">{{ site_settings.tagline }}</p>
+                    {% if site_settings.bio_html %}
+                        <div class="text-gray-300 text-sm">
+                            {{ site_settings.bio_html|safe|truncatewords:20 }}
+                        </div>
+                    {% endif %}
+                </div>
+                
+                <!-- Quick Links -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Quick Links</h3>
+                    <ul class="space-y-2">
+                        <li><a href="{% url 'content:home' %}" class="text-gray-300 hover:text-white transition-colors duration-200">Home</a></li>
+                        <li><a href="{% url 'content:about' %}" class="text-gray-300 hover:text-white transition-colors duration-200">About</a></li>
+                        <li><a href="{% url 'content:post_list' %}" class="text-gray-300 hover:text-white transition-colors duration-200">Blog</a></li>
+                        <li><a href="{% url 'content:project_list' %}" class="text-gray-300 hover:text-white transition-colors duration-200">Projects</a></li>
+                        <li><a href="{% url 'content:contact' %}" class="text-gray-300 hover:text-white transition-colors duration-200">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Social & Contact -->
+                <div>
+                    <h3 class="text-lg font-semibold mb-4">Connect</h3>
+                    <div class="space-y-2">
+                        {% if site_settings.contact_email %}
+                            <p class="text-gray-300">
+                                <a href="mailto:{{ site_settings.contact_email }}" class="hover:text-white transition-colors duration-200">
+                                    {{ site_settings.contact_email }}
+                                </a>
+                            </p>
+                        {% endif %}
+                        
+                        {% if site_settings.social_links %}
+                            <div class="flex space-x-4 mt-4">
+                                {% for platform, url in site_settings.social_links.items %}
+                                    <a href="{{ url }}" target="_blank" rel="noopener noreferrer" class="text-gray-300 hover:text-white transition-colors duration-200">
+                                        <span class="sr-only">{{ platform|title }}</span>
+                                        {{ platform|title }}
+                                    </a>
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-300">
+                <p>&copy; {% now "Y" %} {{ site_settings.owner_name }}. All rights reserved.</p>
+                <p class="text-sm mt-2">
+                    Built with <a href="https://www.djangoproject.com/" class="text-blue-400 hover:text-blue-300">Django</a> and 
+                    <a href="https://tailwindcss.com/" class="text-blue-400 hover:text-blue-300">Tailwind CSS</a>
+                </p>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- JavaScript -->
+    <script>
+        // Dark mode toggle
+        const darkModeToggle = document.getElementById('dark-mode-toggle');
+        const html = document.documentElement;
+        // Check for saved dark mode preference
+        const darkMode = localStorage.getItem('darkMode');
+        if (darkMode === 'true' || (!darkMode && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+        }
+        darkModeToggle.addEventListener('click', () => {
+            html.classList.toggle('dark');
+            const isDark = html.classList.contains('dark');
+            localStorage.setItem('darkMode', isDark);
+        });
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        document.addEventListener('click', (e) => {
+            if (!mobileMenuButton.contains(e.target) && !mobileMenu.contains(e.target)) {
+                mobileMenu.classList.add('hidden');
+            }
+        });
+    </script>
+    
+    <script>
+      // Enhanced particle background animation
+      (function(){
+        const particlesContainer = document.getElementById('particles-bg');
+        if (!particlesContainer) return;
+        
+        // Create floating particles with vibrant colors
+        const colors = [
+          'rgba(59, 130, 246, 0.6)',   // Blue
+          'rgba(139, 92, 246, 0.6)',   // Purple
+          'rgba(236, 72, 153, 0.6)',   // Pink
+          'rgba(16, 185, 129, 0.6)',   // Emerald
+          'rgba(251, 191, 36, 0.6)',   // Yellow
+          'rgba(239, 68, 68, 0.6)'     // Red
+        ];
+        
+        // Create multiple layers of particles
+        for (let layer = 0; layer < 3; layer++) {
+          const particleCount = layer === 0 ? 20 : layer === 1 ? 15 : 10;
+          const speed = layer === 0 ? 15 : layer === 1 ? 20 : 25;
+          
+          for (let i = 0; i < particleCount; i++) {
+            const particle = document.createElement('div');
+            particle.className = 'particle';
+            const color = colors[Math.floor(Math.random() * colors.length)];
+            const size = (layer + 1) * (Math.random() * 3 + 2);
+            
+            particle.style.cssText = `
+              position: absolute;
+              width: ${size}px;
+              height: ${size}px;
+              background: ${color};
+              border-radius: 50%;
+              left: ${Math.random() * 100}%;
+              top: ${Math.random() * 100}%;
+              animation: particleFloat ${speed + Math.random() * 10}s linear infinite;
+              animation-delay: ${Math.random() * 8}s;
+              box-shadow: 0 0 ${size * 2}px ${color};
+              filter: blur(${layer * 0.5}px);
+              z-index: ${layer};
+            `;
+            particlesContainer.appendChild(particle);
+          }
+        }
+      })();
+    </script>
+    
+    <script>
+      // Enhanced hero animations
+      (function(){
+        const greetingEl = document.getElementById('hero-greeting');
+        const nameEl = document.getElementById('hero-name');
+        const rolesEl = document.getElementById('hero-roles');
+        
+        if(!greetingEl || !nameEl) return;
+
+        const roles = [
+          'Backend Developer',
+          'Django Enthusiast', 
+          'Python Developer',
+          'Web Application Builder',
+          'Open Source Contributor',
+          'Problem Solver'
+        ];
+
+        // Enhanced typewriter effect for greeting
+        let i = 0;
+        const phrase = "Hi, I'm";
+        greetingEl.textContent = '';
+        
+        function typeGreeting(){
+          if(i <= phrase.length){
+            greetingEl.textContent = phrase.slice(0, i++);
+            requestAnimationFrame(()=>setTimeout(typeGreeting, 100));
+          } else {
+            // Start name animation after greeting is complete
+            setTimeout(() => {
+              nameEl.style.opacity = '1';
+              nameEl.style.transform = 'translateX(0)';
+            }, 500);
+          }
+        }
+        
+        // Start typing after a delay
+        setTimeout(typeGreeting, 1000);
+
+        // Enhanced role rotation with fade effects
+        let r = 0;
+        function rotateRole(){
+          if(!rolesEl) return;
+          
+          // Fade out
+          rolesEl.style.opacity = '0';
+          rolesEl.style.transform = 'translateY(10px)';
+          
+          setTimeout(()=>{
+            rolesEl.textContent = roles[r % roles.length];
+            // Fade in
+            rolesEl.style.opacity = '1';
+            rolesEl.style.transform = 'translateY(0)';
+            r++;
+          }, 300);
+        }
+        
+        // Start role rotation after name animation
+        setTimeout(() => {
+          setInterval(rotateRole, 4000);
+        }, 3000);
+
+
+
+        // Add scroll indicator functionality
+        const scrollIndicator = document.querySelector('.scroll-indicator');
+        if(scrollIndicator) {
+          scrollIndicator.addEventListener('click', function() {
+            const nextSection = document.querySelector('.hero-section').nextElementSibling;
+            if(nextSection) {
+              nextSection.scrollIntoView({ behavior: 'smooth' });
+            }
+          });
+        }
+      })();
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+</html> 

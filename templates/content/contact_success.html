@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Thanks - {{ site_settings.owner_name }}{% endblock %}
+
+{% block content %}
+<section class="section">
+  <div class="container max-w-xl text-center">
+    <h1 class="text-4xl font-bold mb-4">Thank you!</h1>
+    <p class="text-gray-600 dark:text-gray-400">Your message has been sent. I'll get back to you soon.</p>
+    <div class="mt-6">
+      <a class="btn" href="{% url 'content:home' %}">Back to Home</a>
+    </div>
+  </div>
+</section>
+{% endblock %} 

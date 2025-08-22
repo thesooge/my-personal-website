@@ -1,0 +1,151 @@
+[
+  {
+    "model": "content.sitesetting",
+    "pk": 1,
+    "fields": {
+      "owner_name": "YOUR NAME",
+      "tagline": "Software Engineer & Builder",
+      "bio_md": "Hello! This is your bio. Update it in the admin.",
+      "social_links": {
+        "github": "https://github.com/yourusername",
+        "linkedin": "https://linkedin.com/in/yourusername",
+        "twitter": "https://twitter.com/yourusername"
+      },
+      "contact_email": "your.email@example.com",
+      "default_meta_description": "Personal website and portfolio",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {"model":"content.category","pk":1,"fields":{"name":"General","slug":"general","description":"General topics","created_at":"2024-01-01T00:00:00Z","updated_at":"2024-01-01T00:00:00Z"}},
+  {"model":"content.category","pk":2,"fields":{"name":"Tech","slug":"tech","description":"Technology","created_at":"2024-01-01T00:00:00Z","updated_at":"2024-01-01T00:00:00Z"}},
+  {"model":"content.tag","pk":1,"fields":{"name":"Django","slug":"django","created_at":"2024-01-01T00:00:00Z"}},
+  {"model":"content.tag","pk":2,"fields":{"name":"Python","slug":"python","created_at":"2024-01-01T00:00:00Z"}},
+  {"model":"content.tag","pk":3,"fields":{"name":"Web","slug":"web","created_at":"2024-01-01T00:00:00Z"}},
+  {"model":"auth.user","pk":1,"fields":{"username":"admin","is_superuser":false,"is_staff":false,"is_active":true}},
+  {
+    "model": "content.post",
+    "pk": 1,
+    "fields": {
+      "title": "Welcome to the Blog",
+      "slug": "welcome-to-the-blog",
+      "summary": "An introduction to your new personal site.",
+      "body_md": "# Welcome\n\nThis is a demo post written in **Markdown**.",
+      "body_html": "",
+      "is_published": true,
+      "published_at": "2024-01-01T00:00:00Z",
+      "category": 1,
+      "tags": [1,2],
+      "author": 1,
+      "reading_time": 1,
+      "og_image": "",
+      "meta_title": "Welcome to the Blog",
+      "meta_description": "An introduction to your new personal site.",
+      "created_at": "2024-01-01T00:00:00Z",
+      "updated_at": "2024-01-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "content.post",
+    "pk": 2,
+    "fields": {
+      "title": "Building with Django",
+      "slug": "building-with-django",
+      "summary": "Why Django is a great choice for personal sites.",
+      "body_md": "## Django\n\nFast to build, secure by default.",
+      "body_html": "",
+      "is_published": true,
+      "published_at": "2024-02-01T00:00:00Z",
+      "category": 2,
+      "tags": [1,3],
+      "author": 1,
+      "reading_time": 1,
+      "og_image": "",
+      "meta_title": "Building with Django",
+      "meta_description": "Why Django is a great choice for personal sites.",
+      "created_at": "2024-02-01T00:00:00Z",
+      "updated_at": "2024-02-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "content.post",
+    "pk": 3,
+    "fields": {
+      "title": "Python Tips",
+      "slug": "python-tips",
+      "summary": "Handy tips for everyday Python.",
+      "body_md": "Use list comprehensions and f-strings.",
+      "body_html": "",
+      "is_published": true,
+      "published_at": "2024-03-01T00:00:00Z",
+      "category": 2,
+      "tags": [2],
+      "author": 1,
+      "reading_time": 1,
+      "og_image": "",
+      "meta_title": "Python Tips",
+      "meta_description": "Handy tips for everyday Python.",
+      "created_at": "2024-03-01T00:00:00Z",
+      "updated_at": "2024-03-01T00:00:00Z"
+    }
+  },
+  {
+    "model": "content.project",
+    "pk": 1,
+    "fields": {
+      "name": "Personal Site",
+      "slug": "personal-site",
+      "short_description": "This website itself.",
+      "body_md": "A Django + Tailwind site.",
+      "body_html": "",
+      "repo_url": "https://github.com/yourusername/personal-site",
+      "live_url": "",
+      "is_featured": true,
+      "is_published": true,
+      "sort_order": 1,
+      "published_at": "2024-01-15T00:00:00Z",
+      "tags": [1,3],
+      "created_at": "2024-01-15T00:00:00Z",
+      "updated_at": "2024-01-15T00:00:00Z"
+    }
+  },
+  {
+    "model": "content.project",
+    "pk": 2,
+    "fields": {
+      "name": "API Client",
+      "slug": "api-client",
+      "short_description": "A small Python API client.",
+      "body_md": "Wraps a REST API with requests.",
+      "body_html": "",
+      "repo_url": "https://github.com/yourusername/api-client",
+      "live_url": "",
+      "is_featured": false,
+      "is_published": true,
+      "sort_order": 2,
+      "published_at": "2024-02-10T00:00:00Z",
+      "tags": [2],
+      "created_at": "2024-02-10T00:00:00Z",
+      "updated_at": "2024-02-10T00:00:00Z"
+    }
+  },
+  {
+    "model": "content.project",
+    "pk": 3,
+    "fields": {
+      "name": "Portfolio Grid",
+      "slug": "portfolio-grid",
+      "short_description": "A responsive portfolio layout.",
+      "body_md": "Uses CSS Grid and Tailwind.",
+      "body_html": "",
+      "repo_url": "https://github.com/yourusername/portfolio-grid",
+      "live_url": "",
+      "is_featured": true,
+      "is_published": true,
+      "sort_order": 3,
+      "published_at": "2024-03-05T00:00:00Z",
+      "tags": [3],
+      "created_at": "2024-03-05T00:00:00Z",
+      "updated_at": "2024-03-05T00:00:00Z"
+    }
+  }
+] 
