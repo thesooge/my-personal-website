@@ -1,0 +1,29 @@
+# Production Requirements
+# Install with: pip install -r requirements-prod.txt
+
+# Django and Core Dependencies
+Django==5.2.5
+asgiref==3.9.1
+sqlparse==0.5.3
+
+# Django Extensions and Utilities
+django-environ==0.12.0
+django-tailwind==4.2.0
+djangorestframework==3.16.1
+
+# Image Processing
+Pillow==10.4.0
+easy-thumbnails==2.10.1
+
+# Text Processing and Markdown
+Markdown==3.8.2
+bleach==6.2.0
+webencodings==0.5.1
+
+# Utilities
+packaging==25.0
+pathspec==0.12.1
+typing_extensions==4.14.1
+
+# Security Note: Make sure to set DEBUG=False in production
+# and use proper environment variables for sensitive data

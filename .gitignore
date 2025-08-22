@@ -260,7 +260,7 @@ yarn.lock
 # Python package management
 Pipfile.lock
 poetry.lock
-requirements.txt
+# requirements.txt
 requirements/*.txt
 
 # Logs

@@ -13,8 +13,38 @@ A fast, accessible, SEO-friendly personal website for local development.
 - Quality: ruff, mypy; Tests: pytest with coverage ≥90% on `content`
 
 ## Requirements
-- Python 3.12
+- Python 3.12+
 - Node is not required directly; Tailwind runs via `django-tailwind` app
+
+## Dependencies
+
+### Base Requirements
+```bash
+pip install -r requirements.txt
+```
+
+### Development Requirements
+```bash
+pip install -r requirements-dev.txt
+```
+
+### Production Requirements
+```bash
+pip install -r requirements-prod.txt
+```
+
+### Quick Setup
+```bash
+# Make the script executable (first time only)
+chmod +x install.sh
+
+# Install all dependencies and setup project
+./install.sh
+
+# Or install for specific environment
+./install.sh dev      # Development environment
+./install.sh prod     # Production environment
+```
 
 ## Environment
 Copy `env.example` to `.env` and adjust values:
