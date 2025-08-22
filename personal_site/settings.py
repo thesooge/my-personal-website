@@ -204,14 +204,26 @@ CACHES = {
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
+    "formatters": {
+        "verbose": {
+            "format": "{levelname} {asctime} {module} {process:d} {thread:d} {message}",
+            "style": "{",
+        },
+        "simple": {
+            "format": "{levelname} {message}",
+            "style": "{",
+        },
+    },
     "handlers": {
         "console": {
             "class": "logging.StreamHandler",
+            "formatter": "verbose",
         },
         "file": {
             "class": "logging.FileHandler",
             "filename": BASE_DIR / "logs" / "django.log",
-        },
+            "formatter": "verbose",
+        } if DEBUG else None,
     },
     "root": {
         "handlers": ["console"],
@@ -219,12 +231,23 @@ LOGGING = {
     },
     "loggers": {
         "django": {
-            "handlers": ["console", "file"],
+            "handlers": ["console", "file"] if DEBUG else ["console"],
             "level": "INFO",
+            "propagate": False,
+        },
+        "django.request": {
+            "handlers": ["console"],
+            "level": "ERROR",
+            "propagate": False,
+        },
+        "django.security": {
+            "handlers": ["console"],
+            "level": "ERROR",
             "propagate": False,
         },
     },
 }
 
-# Create logs directory if it doesn't exist
-os.makedirs(BASE_DIR / "logs", exist_ok=True)
+# Create logs directory only in development
+if DEBUG:
+    os.makedirs(BASE_DIR / "logs", exist_ok=True)

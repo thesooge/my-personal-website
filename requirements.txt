@@ -42,3 +42,12 @@ iniconfig==2.1.0
 # Development Environment
 # Note: Remove these lines if deploying to production
 # -e git+https://github.com/thesooge/my-personal-website.git@6630277a6cb111f5417710360e0538ee7a429d7e#egg=personal_site
+
+# Production Dependencies (for Liara.ir deployment)
+# Uncomment these lines when deploying to production:
+# psycopg2-binary==2.9.9
+# redis==5.0.1
+# whitenoise==6.6.0
+# django-csp==3.7
+# gunicorn==21.2.0
+# python-dotenv==1.0.0

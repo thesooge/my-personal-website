@@ -1,0 +1,52 @@
+# Liara.ir Production Requirements
+# Install with: pip install -r requirements-liara.txt
+
+# Django and Core Dependencies
+Django==5.2.5
+asgiref==3.9.1
+sqlparse==0.5.3
+
+# Django Extensions and Utilities
+django-environ==0.12.0
+django-tailwind==4.2.0
+djangorestframework==3.16.1
+
+# Image Processing
+Pillow==10.4.0
+easy-thumbnails==2.10.1
+
+# Text Processing and Markdown
+Markdown==3.8.2
+bleach==6.2.0
+webencodings==0.5.1
+
+# Production Database
+psycopg2-binary==2.9.9
+
+# Production Cache
+redis==5.0.1
+
+# Production Static Files
+whitenoise==6.6.0
+
+# Production Security
+django-csp==3.7
+
+# Production Utilities
+packaging==25.0
+pathspec==0.12.1
+typing_extensions==4.14.1
+
+# Gunicorn for production server
+gunicorn==21.2.0
+
+# Production environment variables
+python-dotenv==1.0.0
+
+# Note: Make sure to set these environment variables in Liara.ir:
+# - SECRET_KEY
+# - DEBUG=False
+# - ALLOWED_HOSTS
+# - DB_NAME, DB_USER, DB_PASSWORD, DB_HOST, DB_PORT
+# - EMAIL_HOST, EMAIL_PORT, EMAIL_HOST_USER, EMAIL_HOST_PASSWORD
+# - REDIS_URL
